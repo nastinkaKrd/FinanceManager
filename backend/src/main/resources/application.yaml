@@ -1,0 +1,40 @@
+server:
+  port: ${SERVER_PORT:8080}
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+spring:
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  flyway:
+    baseline-on-migrate: true
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/financeManager}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+    hibernate.ddl-auto: validate
+
+  data:
+    web.pageable.one-indexed-parameters: true
+
+myapp:
+  secret: ${SECRET_KEY:2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b}

@@ -1,0 +1,23 @@
+<div class="auth-form">
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center align-items-center vh-50">
+      <form class="w-auto py-5 my-lg-5 form-area text-bg-light">
+        <span class="fs-3 text-center">Login form</span>
+        <hr>
+        <div class="form-group">
+          <label for="exampleInputUsername1">Username</label>
+          <input type="text" class="form-control" id="exampleInputUsername1" aria-describedby="usernameHelp" placeholder="user123" [(ngModel)]="loginData.username" name="username" required>
+        </div><br>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="loginData.password" name="password" required>
+          <span>length - 8, 1 - number, 1 - upper case letter, 1 - special symbol</span>
+        </div><br>
+        <div *ngIf="loginData.password.match('^(?=.*\\d)(?=.*[A-Z])(?=.*[!@#$%^&*()-_+=]).{8,}$')">
+          <button type="submit" class="btn btn-dark text-white w-100" [routerLink]="['']" (click)="authenticate()">Log in</button>
+        </div>
+        <a href="/api/auth/signup" class="text-decoration-none text-dark-emphasis d-block mt-3">If you don't have account -> register</a>
+      </form>
+    </div>
+  </div>
+</div>

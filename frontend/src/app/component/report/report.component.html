@@ -1,0 +1,118 @@
+<div id="report-area" class="px-4 area-size">
+  <div class="w-auto" *ngIf="!showGroupedChart && !showGeneralChart">
+    <div class="row">
+      <div class="d-flex justify-content-center align-items-center" id="report-form-area">
+        <form class="form-area text-bg-light w-auto">
+          <span class="fs-3 text-center">Get report</span>
+          <hr>
+          <div class="d-flex flex-row">
+            <div class="form-group p-2">
+              <label for="startDate">Start date</label>
+              <input type="date" class="form-control" id="startDate" placeholder="start date" [(ngModel)]="requestDataForReport.startDate" name="startDate" required>
+            </div>
+            <div class="form-group p-2">
+              <label for="endDate">Date</label>
+              <input type="date" class="form-control" id="endDate" placeholder="endDate" [(ngModel)]="requestDataForReport.endDate" name="endDate" required>
+            </div>
+          </div><br>
+          <div class="d-flex flex-row">
+            <div class="p-2 form-group">
+              <label for="type">Type</label>
+              <select  class="mx-3" id="type" name="type" [(ngModel)]="requestDataForReport.type">
+                <option *ngFor="let type of transactionTypes" [value]="type">{{ type }}</option>
+              </select>
+            </div><br>
+            <div class="p-2 form-group">
+              <label for="currency">Currency</label>
+              <select  class="mx-3" id="currency" name="currency" [(ngModel)]="requestDataForReport.currency">
+                <option *ngFor="let tempCurrency of currency" [value]="tempCurrency">{{ tempCurrency }}</option>
+              </select>
+            </div>
+          </div><br>
+          <div class="d-flex flex-row mx-2">
+            <button type="submit" class="p-2 btn btn-dark text-white w-100 fs-5" (click)="getGeneralReport()">get general report</button>
+            <button type="submit" class="p-2 mx-3 btn btn-dark text-white w-100 fs-5" (click)="getGroupedReport()">get grouped report</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<div [hidden]="!showGroupedChart">
+  <div class="d-flex flex-row justify-content-center" *ngIf="reportKeys.length<1">
+    <h1 class="text-center body-titles mx-2">Data is not found</h1>
+    <button class="btn btn-light fs-5 body-titles" (click)="getReportForm()">get report form</button>
+  </div>
+  <div [hidden]="reportKeys.length<1">
+    <h1 class="body-titles my-3">Report (start date - {{requestDataForReport.startDate}}; end date - {{requestDataForReport.endDate}};)</h1>
+    <div class="w-auto chart-area" >
+      <div class="d-flex flex-row">
+        <div class="w-auto mx-5">
+          <table class="table table-bordered mx-auto">
+            <thead class="thead fs-4 bg-white">
+            <tr>
+              <th scope="col">№</th>
+              <th scope="col">category</th>
+              <th scope="col">amount</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let data of dataWithTotalAmountOfCategory | keyvalue; let i = index;" class="fs-5 bg-white">
+            <tr>
+              <th scope="row">{{ i+1 }}</th>
+              <td>{{data.key}}</td>
+              <td>{{data.value.amount | currency : data.value.currency}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <div>
+            <h2>General {{totalAmount | currency : reportCurrency}}</h2>
+          </div>
+        </div>
+        <div class="mx-5 pie-chart">
+          <canvas id="pieChart"></canvas>
+          <div class="my-2 text-center">
+            <button class="btn btn-light" (click)="getReportForm()">get report form</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div [hidden]="!showGeneralChart">
+  <div class="d-flex flex-row justify-content-center" *ngIf="reportKeys.length<1">
+    <h1 class="text-center body-titles mx-2" >Data is not found</h1>
+    <button class="btn btn-light fs-5 body-titles" (click)="getReportForm()">get report form</button>
+  </div>
+  <div [hidden]="reportKeys.length<1">
+    <h1 class="body-titles my-2">Report (start date - {{requestDataForReport.startDate}}; end date - {{requestDataForReport.endDate}};)</h1>
+    <div class="line-chart-area">
+      <div class="d-flex flex-row">
+        <div class="w-auto mx-5">
+          <table class="table table-bordered mx-auto">
+            <thead class="thead fs-4 bg-white">
+            <tr>
+              <th scope="col">№</th>
+              <th scope="col">date</th>
+              <th scope="col">amount</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let data of generalReportData | keyvalue; let i = index;" class="fs-5 bg-white">
+            <tr>
+              <th scope="row">{{ i+1 }}</th>
+              <td>{{data.key}}</td>
+              <td>{{data.value.amount | currency : data.value.currency}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="m-auto w-75" >
+          <canvas id="lineChart"></canvas>
+          <div class="m-auto text-center">
+            <button class="btn btn-light" (click)="getReportForm()">get report form</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

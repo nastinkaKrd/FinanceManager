@@ -1,0 +1,320 @@
+openapi: 3.0.3
+info:
+  title: Finance Manager
+  description: |-
+    Allowed user to signup, login, create/update transactions and categories to them, generate a report with certain data.
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080/api'
+tags:
+  - name: authorization
+    description: User REST API Endpoints
+  - name: category
+    description: Category REST API Endpoints
+  - name: transaction
+    description: Transaction REST API Endpoints
+  - name: report
+    description: Report REST API Endpoints
+paths:
+  /auth/signup:
+    post:
+      tags:
+        - authorization
+      summary: Register
+      description: Register user
+      operationId: signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components.yaml#/components/schemas/RegisterRequestDto'
+      responses:
+        '201':
+          description: User is registered
+        '208':
+          description: User is already registered on this email
+        '400':
+          description: Bad request
+
+  /auth/login:
+    post:
+      tags:
+        - authorization
+      summary: Authenticate
+      description: Login user
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components.yaml#/components/schemas/AuthRequestDto'
+      responses:
+        '201':
+          description: User is logged in
+        '400':
+          description: Bad request
+        '403':
+          description: Email is not confirmed or bad credentials
+        '404':
+          description: User is not found
+
+  /categories:
+    get:
+      tags:
+        - category
+      summary: Get all categories
+      description: Get all categories
+      security:
+        - bearerAuth: [ ]
+      operationId: getCategories
+      responses:
+        '200':
+          description: Categories are returned
+        '401':
+          description: User is unauthorized
+        '403':
+          description: Email is not confirmed or bad credentials
+
+    post:
+      tags:
+        - category
+      summary: Add category
+      description: Add category
+      security:
+        - bearerAuth: [ ]
+      operationId: addCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components.yaml#/components/schemas/RequestCategoryDto'
+      responses:
+        '201':
+          description: Category is created
+        '208':
+          description: Category is already created
+        '400':
+          description: Bad request
+        '401':
+          description: User is unauthorized
+        '403':
+          description: Email is not confirmed or bad credentials
+
+  /categories/{id}:
+    put:
+      tags:
+        - category
+      summary: Change category
+      description: Change category title or description
+      security:
+        - bearerAuth: []
+      operationId: changeCategory
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 1
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components.yaml#/components/schemas/RequestCategoryDto'
+      responses:
+        '200':
+          description: Category is changed
+        '400':
+          description: Bad request
+        '401':
+          description: User is unauthorized
+        '403':
+          description: Email is not confirmed or bad credentials
+        '404':
+          description: Category is not found
+
+    delete:
+      tags:
+        - category
+      summary: Delete category
+      description: Delete category
+      security:
+        - bearerAuth: [ ]
+      operationId: deleteCategory
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 1
+          required: true
+      responses:
+        '204':
+          description: Category is deleted
+        '400':
+          description: Bad request
+        '401':
+          description: User is unauthorized
+        '403':
+          description: Email is not confirmed or bad credentials
+        '404':
+          description: Category is not found
+
+  /transactions:
+    get:
+      tags:
+        - transaction
+      summary: Get all transactions
+      description: Get all transactions
+      security:
+        - bearerAuth: [ ]
+      operationId: getTransactions
+      responses:
+        '200':
+          description: Transactions are returned
+        '401':
+          description: User is unauthorized
+        '403':
+          description: Email is not confirmed or bad credentials
+
+    post:
+      tags:
+        - transaction
+      summary: Add transaction
+      description: Add transaction
+      security:
+        - bearerAuth: [ ]
+      operationId: addTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components.yaml#/components/schemas/RequestTransactionDto'
+      responses:
+        '201':
+          description: Transaction is created
+        '208':
+          description: Transaction is already created
+        '400':
+          description: Bad request
+        '401':
+          description: User is unauthorized
+        '403':
+          description: Email is not confirmed or bad credentials
+
+  /transactions/{id}:
+    put:
+      tags:
+        - transaction
+      summary: Change transaction
+      description: Change transaction
+      security:
+        - bearerAuth: []
+      operationId: changeTransaction
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 1
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components.yaml#/components/schemas/RequestTransactionDto'
+      responses:
+        '200':
+          description: Transaction is changed
+        '400':
+          description: Bad request
+        '401':
+          description: User is unauthorized
+        '403':
+          description: Email is not confirmed or bad credentials
+        '404':
+          description: Transaction is not found
+
+    delete:
+      tags:
+        - transaction
+      summary: Delete transaction
+      description: Delete transaction
+      security:
+        - bearerAuth: [ ]
+      operationId: deleteTransaction
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 1
+          required: true
+      responses:
+        '204':
+          description: Transaction is deleted
+        '400':
+          description: Bad request
+        '401':
+          description: User is unauthorized
+        '403':
+          description: Email is not confirmed or bad credentials
+        '404':
+          description: Transaction is not found
+
+  /report/grouped:
+    post:
+      tags:
+        - report
+      summary: Create grouped report
+      description: Create and get grouped report by transaction categories and expenses or revenues
+      security:
+        - bearerAuth: [ ]
+      operationId: getGroupedReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components.yaml#/components/schemas/RequestDataForReport'
+      responses:
+        '201':
+          description: Report is created
+        '400':
+          description: Bad request
+        '401':
+          description: User is unauthorized
+        '403':
+          description: Email is not confirmed or bad credentials
+
+  /report/general:
+    post:
+      tags:
+        - report
+      summary: Create general report
+      description: Create and get general report by transaction date and expenses or revenues
+      security:
+        - bearerAuth: [ ]
+      operationId: getGeneralReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components.yaml#/components/schemas/RequestDataForReport'
+      responses:
+        '201':
+          description: Report is created
+        '400':
+          description: Bad request
+        '401':
+          description: User is unauthorized
+        '403':
+          description: Email is not confirmed or bad credentials
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  

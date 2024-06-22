@@ -1,0 +1,81 @@
+openapi: 3.0.3
+info:
+  title: Finance Manager components
+  description: List of finance manager components
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080/user-management/v1'
+paths: {}
+
+components:
+  schemas:
+    RegisterRequestDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: username123
+        email:
+          type: string
+          example: username@gmail.com
+        password:
+          type: string
+          example: qwertY@12
+
+    AuthRequestDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: username123
+        password:
+          type: string
+          example: qwertY@12
+
+    RequestCategoryDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: rest
+        description:
+          type: string
+          example: dancing
+
+    RequestTransactionDto:
+      type: object
+      properties:
+        description:
+          type: string
+          example: apple music
+        date:
+          type: string
+          example: 01-01-2024
+        type:
+          type: string
+          example: expenses
+        amount:
+          type: number
+          example: 1
+        currency:
+          type: string
+          example: USD
+        category:
+          type: string
+          example: subscriptions
+
+    RequestDataForReport:
+      type: object
+      properties:
+        startDate:
+          type: string
+          example: 01-01-2024
+        endDate:
+          type: string
+          example: 01-01-2024
+        type:
+          type: string
+          example: EXPENSES
+        currency:
+          type: string
+          example: USD

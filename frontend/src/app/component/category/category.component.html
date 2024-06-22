@@ -1,0 +1,45 @@
+<div class="justify-content-center d-flex flex-row">
+  <h1 class="body-titles">Basic categories</h1>
+  <button class="btn btn-dark mx-3 fs-5"><a href="/api/add-category" class="text-decoration-none text-light">add my</a></button>
+</div>
+<table class="table table-bordered w-auto mx-auto my-5">
+  <thead class="thead bg-white fs-4">
+  <tr>
+    <th scope="col">title</th>
+    <th scope="col">description</th>
+  </tr>
+  </thead>
+  <tbody *ngFor="let category of categories" class="fs-5">
+  <tr *ngIf="category.user === null">
+    <td>{{category.title}}</td>
+    <td>{{category.description}}</td>
+  </tr>
+
+  </tbody>
+</table>
+
+<div *ngIf="containsUserCategory">
+  <h1 class="body-titles">My categories</h1>
+  <table class="table table-bordered w-auto mx-auto my-3">
+    <thead class="thead bg-white fs-4">
+    <tr>
+      <th scope="col">title</th>
+      <th scope="col">description</th>
+      <th scope="col">actions</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let category of categories" class="fs-5">
+    <tr *ngIf="category.user !== null">
+      <td>{{category.title}}</td>
+      <td>{{category.description}}</td>
+      <td>
+        <div>
+          <button class="btn"><a href="/api/update-category?id={{category.id}}&title={{category.title}}&description={{category.description}}"><img src="assets/images/rewrite-icon.png" width="25"></a></button>
+          <button class="btn" (click)="deleteCategory(category.id)"><img src="assets/images/delete-icon.png" width="25"></button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

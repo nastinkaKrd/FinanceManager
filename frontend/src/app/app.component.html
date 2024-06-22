@@ -1,0 +1,37 @@
+<div class="page-wrapper">
+  <div class="page-container">
+    <header class="header-desktop">
+      <div class="m-4" *ngIf="isAuthenticated;">
+        <button class="btn bg-dark"><a href="/api/transactions" class="text-decoration-none text-white">transactions</a></button>
+        <button  class="btn bg-dark mx-3"><a href="/api/categories" class="text-decoration-none text-white">categories</a></button>
+        <button class="btn bg-dark"><a href="/api/report" class="text-decoration-none text-white">reports</a></button>
+      </div>
+      <div class="section-content section-content-p30">
+        <div class="">
+          <div class="header-wrap">
+            <div>
+              <span *ngIf="isAuthenticated; else elseBlock1">
+                {{username}}
+              <a href=""><button class="btn bg-white m-1" (click)="logout()">logout</button></a></span>
+              <ng-template #elseBlock1>
+                <a href="/api/auth/login"><button class="btn bg-white m-1">login</button></a></ng-template>
+            </div>
+          </div>
+          <div class="account-wrap"></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <div class="section-content section-content-p30">
+        <div class="container-fluid">
+          <div *ngIf="!isAuthenticated">
+            <h1 class="body-titles">Hi! Welcome to your personal finance manager!!!<br>
+            login to comunicate with me:)</h1>
+          </div>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

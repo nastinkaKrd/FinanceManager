@@ -1,0 +1,60 @@
+<div class="justify-content-center">
+  <h1 class="body-titles">Transactions</h1>
+  <div>
+    <form class="form-inline w-25 mx-auto my-4">
+      <div class="d-flex flex-row">
+        <button class="btn btn-dark"><a href="/api/add-transaction" class="text-decoration-none text-light">new</a></button>
+        <input type="text" class="form-control mx-3" id="inputTransaction" name="transactionDescription" placeholder="Search transaction" [(ngModel)]="transactionDescription">
+        <button type="submit" class="btn btn-dark " (click)="searchByDescription()">Search</button>
+        <div class="dropdown-r mx-3">
+          <span>Filter</span>
+          <div class="dropdown-content-r">
+            <ul *ngFor="let category of categories">
+              <li><button class="btn btn-light fs-5" (click)="setFilterCategoryValue(category.id)">{{ category.title }}</button></li>
+            </ul>
+            <button class="btn btn-light fs-5 w-100" (click)="getTransactions()">cancel filter</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div>
+  <div class="d-flex flex-row justify-content-center">
+    <table class="table table-bordered w-auto mx-2 my-5" *ngIf="transactions.length>0">
+      <thead class="thead bg-white fs-4">
+      <tr>
+        <th scope="col">№</th>
+        <th scope="col">description</th>
+        <th scope="col">category</th>
+        <th scope="col">type</th>
+        <th scope="col">date</th>
+        <th scope="col">amount</th>
+        <th scope="col">currency</th>
+        <th scope="col">actions</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let transaction of transactions; let i = index;" class="fs-5">
+      <tr>
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{transaction.description}}</td>
+        <td>{{transaction.category.title}}</td>
+        <td>{{transaction.type}}</td>
+        <td>{{transaction.date}}</td>
+        <td>{{transaction.amount}}</td>
+        <td>{{transaction.currency}}</td>
+        <td>
+          <div>
+            <button class="btn">
+              <a href="/api/update-transaction?id={{transaction.id}}&description={{transaction.description}}&type={{transaction.type}}&amount={{transaction.amount}}&currency={{transaction.currency}}&category={{transaction.category.title}}&date={{transaction.date}}">
+                <img src="assets/images/rewrite-icon.png" width="25">
+              </a>
+            </button>
+            <button class="btn" (click)="deleteTransaction(transaction.id)"><img src="assets/images/delete-icon.png" width="25"></button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="register-form">
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center align-items-center">
+      <form class="w-25 form-area text-bg-light">
+        <span class="fs-3 text-center">Registration form</span>
+        <hr>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="user@gmail.com"  [(ngModel)]="registerData.email" name="email" required>
+        </div><br>
+        <div class="form-group">
+          <label for="exampleInputUsername1">Username</label>
+          <input type="text" class="form-control" id="exampleInputUsername1" aria-describedby="usernameHelp" placeholder="user123" [(ngModel)]="registerData.username" name="username">
+        </div><br>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="registerData.password" name="password">
+          <span>length - 8, 1 - number, 1 - upper case letter, 1 - special symbol</span>
+        </div><br>
+        <div *ngIf="registerData.password.match('^(?=.*\\d)(?=.*[A-Z])(?=.*[!@#$%^&*()-_+=]).{8,}$')">
+          <button type="submit" class="btn btn-dark text-white w-100" [routerLink]="['']" (click)="register()">Register</button>
+          <span>After sign up check your email...</span>
+        </div>
+        <a href="/api/auth/login" class="text-decoration-none text-dark-emphasis d-block mt-3">If you already have account -> login</a>
+      </form>
+    </div>
+  </div>
+</div>

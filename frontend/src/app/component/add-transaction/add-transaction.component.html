@@ -1,0 +1,47 @@
+<div class="transaction-form area-size">
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center align-items-center vh-50">
+      <form class="w-auto form-area text-bg-light">
+        <span class="fs-3 text-center">Add transaction form</span>
+        <hr>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" class="form-control" id="description" placeholder="description" [(ngModel)]="transaction.description" name="description" required>
+        </div><br>
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" class="form-control" id="date" placeholder="date" [(ngModel)]="transaction.date" name="date" required>
+        </div><br>
+        <div class="d-flex flex-row">
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select  class="mx-2" id="category" name="category" [(ngModel)]="transaction.category.title">
+              <option *ngFor="let category of categories" [value]="category.title">{{ category.title }}</option>
+            </select>
+          </div><br>
+          <div class="form-group">
+            <label for="type" class="mx-2">Type</label>
+            <select  class="" id="type" name="type" [(ngModel)]="transaction.type">
+              <option *ngFor="let type of transactionTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+        </div><br>
+        <div class="d-flex flex-row">
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" class="form-control" id="amount" placeholder="amount" [(ngModel)]="transaction.amount" name="amount" required>
+          </div><br>
+          <div class="form-group">
+            <label for="currency">Currency</label><br>
+            <select  class="mx-3" id="currency" name="currency" [(ngModel)]="transaction.currency">
+              <option *ngFor="let tempCurrency of currency" [value]="tempCurrency">{{ tempCurrency }}</option>
+            </select>
+          </div>
+        </div><br>
+        <div>
+          <button type="submit" class="btn btn-dark text-white w-100 fs-5" (click)="addTransaction()">add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
