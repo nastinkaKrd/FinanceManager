@@ -29,7 +29,7 @@ export class UpdateCategoryComponent {
 
   public changeCategory(){
     this.categoryService.changeCategory(this.category, this.id, this.headerService.getAuthHeader()).subscribe();
-    this.router.navigate(['/api/categories']);
+    this.router.navigate(['/api/categories']).then(window.location.reload);
   }
 
   ngOnInit(): void {

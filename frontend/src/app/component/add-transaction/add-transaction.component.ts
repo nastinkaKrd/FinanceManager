@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import {RequestCategoryData} from "../../common/request-category-data";
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {CategoryService} from "../../services/category.service";
 import {HeaderService} from "../../services/header.service";
@@ -51,7 +50,7 @@ export class AddTransactionComponent {
       }
     })
     this.transactionService.addTransaction(this.transaction, this.headerService.getAuthHeader()).subscribe();
-    this.router.navigate(['/api/transactions']);
+    this.router.navigate(['/api/transactions']).then(window.location.reload);
   }
 
   public getCategories() {
