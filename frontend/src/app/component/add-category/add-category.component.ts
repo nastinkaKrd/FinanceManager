@@ -29,7 +29,7 @@ export class AddCategoryComponent {
 
   public addCategory(){
     this.categoryService.addCategory(this.category, this.headerService.getAuthHeader()).subscribe();
-    this.router.navigate(['/api/categories']);
+    this.router.navigate(['/api/categories']).then(window.location.reload);
   }
 
 }

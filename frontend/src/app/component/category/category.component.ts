@@ -2,7 +2,8 @@ import {Component} from '@angular/core';
 import {CategoryService} from "../../services/category.service";
 import {CategoryDto} from "../../common/category-dto";
 import {HeaderService} from "../../services/header.service";
-import {NgForOf, NgIf} from "@angular/common";
+import {Location, NgForOf, NgIf} from "@angular/common";
+import {Route} from "@angular/router";
 
 @Component({
   selector: 'app-category',
@@ -19,7 +20,8 @@ export class CategoryComponent {
   containsUserCategory: boolean = false;
 
   constructor(private categoryService: CategoryService,
-              private headerService: HeaderService) { }
+              private headerService: HeaderService,
+              private location: Location) { }
 
   public getCategories(){
     this.categoryService.getCategories(this.headerService.getAuthHeader())
@@ -32,7 +34,6 @@ export class CategoryComponent {
         })
         this.categories = data;
       });
-
   }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
 import {CategoryDto} from "../../common/category-dto";
@@ -45,7 +45,7 @@ export class UpdateTransactionComponent {
 
   public changeTransaction(){
     this.transactionService.changeTransaction(this.transaction, this.id, this.headerService.getAuthHeader()).subscribe();
-    this.router.navigate(['/api/transactions']);
+    this.router.navigate(['/api/transactions']).then(window.location.reload);
   }
 
   public getCategories() {
